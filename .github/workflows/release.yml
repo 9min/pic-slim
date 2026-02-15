@@ -52,8 +52,10 @@ jobs:
         run: |
           $tag = "${{ github.ref_name }}"
           $exe = "src-tauri/target/release/pic-slim.exe"
-          if (Test-Path $exe) {
-            $dest = "PicSlim_${tag}_portable.exe"
-            Copy-Item $exe $dest
-            gh release upload $tag $dest --clobber || exit 1
+          if (!(Test-Path $exe)) {
+            Write-Error "Portable exe not found: $exe"
+            exit 1
           }
+          $dest = "pic-slim_${tag}_portable.exe"
+          Copy-Item $exe $dest
+          gh release upload $tag $dest --clobber || exit 1
