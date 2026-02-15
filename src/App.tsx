@@ -28,16 +28,20 @@ function App() {
   );
 
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState<ImageItem | null>(null);
 
   const handleFiles = useCallback(
     async (paths: string[]) => {
+      setIsLoading(true);
       try {
         const loaded = await loadImages(paths);
         addImages(loaded);
       } catch (err) {
         console.error("이미지 로드 실패:", err);
+      } finally {
+        setIsLoading(false);
       }
     },
     [addImages],
@@ -117,6 +121,60 @@ function App() {
         image={previewImage}
         onClose={() => setPreviewImage(null)}
       />
+
+      {/* Loading overlay */}
+      {isLoading && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(255,255,255,0.7)",
+            backdropFilter: "blur(2px)",
+            zIndex: 30,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            className="animate-fade-in"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 16,
+            }}
+          >
+            <svg
+              className="animate-spin"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              style={{ color: "#2563EB" }}
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                opacity="0.2"
+              />
+              <path
+                d="M12 2a10 10 0 0 1 10 10"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            </svg>
+            <p style={{ fontSize: 13, fontWeight: 600, color: "#4B5563" }}>
+              이미지를 불러오는 중...
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Drag overlay for when images are already loaded */}
       {isDragOver && images.length > 0 && (
