@@ -56,6 +56,6 @@ jobs:
             Write-Error "Portable exe not found: $exe"
             exit 1
           }
-          $dest = "pic-slim_${tag}_portable.exe"
+          $dest = "PicSlim_${tag}_portable.exe"
           Copy-Item $exe $dest
           gh release upload $tag $dest --clobber || exit 1

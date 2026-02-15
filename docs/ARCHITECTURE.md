@@ -326,7 +326,7 @@ Push tag v*
     ├── Node.js 22 + Rust stable + NASM 설치
     ├── npm ci
     ├── tauri-action (빌드 + NSIS 인스톨러 생성)
-    ├── 포터블 exe 업로드 (pic-slim_v*_portable.exe)
+    ├── 포터블 exe 업로드 (PicSlim_v*_portable.exe)
     └── GitHub Release (draft) + 인스톨러 + 포터블 exe 첨부
 ```
 
