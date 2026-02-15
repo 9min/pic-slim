@@ -38,8 +38,8 @@ function App() {
       try {
         const loaded = await loadImages(paths);
         addImages(loaded);
-      } catch (err) {
-        console.error("이미지 로드 실패:", err);
+      } catch {
+        /* 이미지 로드 실패 시 무시 */
       } finally {
         setIsLoading(false);
       }
@@ -60,8 +60,8 @@ function App() {
   const handleOpenFolder = useCallback(async () => {
     try {
       await openOutputFolder(settings.output_dir);
-    } catch (err) {
-      console.error("폴더 열기 실패:", err);
+    } catch {
+      /* 폴더 열기 실패 시 무시 */
     }
   }, [settings.output_dir]);
 

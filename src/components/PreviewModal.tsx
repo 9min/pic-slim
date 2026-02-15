@@ -30,8 +30,8 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
           const compressed = await getImagePreview(image.output_path);
           setCompressedPreview(compressed);
         }
-      } catch (err) {
-        console.error("프리뷰 로드 실패:", err);
+      } catch {
+        /* 프리뷰 로드 실패 시 무시 - UI에서 빈 상태로 표시됨 */
       } finally {
         setLoading(false);
       }

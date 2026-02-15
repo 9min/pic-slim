@@ -60,8 +60,8 @@ export function useCompression(
           settings,
           handleEvent,
         );
-      } catch (err) {
-        console.error("압축 오류:", err);
+      } catch {
+        /* 압축 오류 시 무시 - 개별 이미지 에러는 이벤트로 처리됨 */
       } finally {
         setIsCompressing(false);
       }
