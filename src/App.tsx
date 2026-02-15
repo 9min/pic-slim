@@ -120,9 +120,31 @@ function App() {
 
       {/* Drag overlay for when images are already loaded */}
       {isDragOver && images.length > 0 && (
-        <div className="fixed inset-0 bg-accent/5 backdrop-blur-[1px] border-2 border-dashed border-accent z-30 flex items-center justify-center pointer-events-none">
-          <div className="bg-surface px-6 py-4 rounded-xl shadow-lg border border-accent/20 animate-fade-in">
-            <p className="text-sm font-semibold text-accent">
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(37,99,235,0.04)",
+            backdropFilter: "blur(1px)",
+            border: "2px dashed #2563EB",
+            zIndex: 30,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            className="animate-fade-in"
+            style={{
+              background: "#fff",
+              padding: "16px 28px",
+              borderRadius: 12,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+              border: "1px solid rgba(37,99,235,0.15)",
+            }}
+          >
+            <p style={{ fontSize: 14, fontWeight: 600, color: "#2563EB" }}>
               이미지를 놓아서 추가하세요
             </p>
           </div>

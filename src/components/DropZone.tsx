@@ -23,29 +23,62 @@ export default function DropZone({ isDragOver, onFiles }: DropZoneProps) {
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center p-6">
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 24,
+      }}
+    >
       <button
         onClick={handleClick}
-        className={`w-full max-w-md aspect-[4/3] rounded-2xl flex flex-col items-center justify-center gap-5 transition-all duration-300 cursor-pointer group ${
-          isDragOver
-            ? "bg-accent-subtle border-2 border-accent scale-[1.01] shadow-[0_0_0_4px_rgba(37,99,235,0.1)]"
-            : "bg-surface border-2 border-dashed border-border hover:border-accent/40 hover:bg-accent-subtle/50 hover:shadow-sm"
-        }`}
+        style={{
+          width: "100%",
+          maxWidth: 420,
+          aspectRatio: "4/3",
+          borderRadius: 20,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 20,
+          cursor: "pointer",
+          transition: "all 0.3s ease",
+          background: isDragOver ? "#EFF6FF" : "#fff",
+          border: isDragOver
+            ? "2px solid #2563EB"
+            : "2px dashed #D1D5DB",
+          boxShadow: isDragOver
+            ? "0 0 0 4px rgba(37,99,235,0.1), 0 4px 12px rgba(0,0,0,0.05)"
+            : "0 1px 3px rgba(0,0,0,0.02)",
+          transform: isDragOver ? "scale(1.01)" : "scale(1)",
+        }}
       >
         {/* Upload icon */}
         <div
-          className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-            isDragOver
-              ? "bg-accent/10 scale-110"
-              : "bg-surface-elevated group-hover:bg-accent/5 group-hover:scale-105"
-          }`}
+          style={{
+            width: 64,
+            height: 64,
+            borderRadius: 16,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: isDragOver ? "rgba(37,99,235,0.08)" : "#F9FAFB",
+            transition: "all 0.3s ease",
+            transform: isDragOver ? "scale(1.1)" : "scale(1)",
+          }}
         >
           <svg
             width="28"
             height="28"
             viewBox="0 0 24 24"
             fill="none"
-            className={`transition-colors duration-200 ${isDragOver ? "text-accent" : "text-text-tertiary group-hover:text-accent"}`}
+            style={{
+              color: isDragOver ? "#2563EB" : "#9CA3AF",
+              transition: "color 0.2s ease",
+            }}
           >
             <path
               d="M12 16V4m0 0l-4 4m4-4l4 4"
@@ -64,25 +97,44 @@ export default function DropZone({ isDragOver, onFiles }: DropZoneProps) {
           </svg>
         </div>
 
-        <div className="text-center space-y-1.5">
+        <div style={{ textAlign: "center" }}>
           <p
-            className={`text-sm font-semibold transition-colors duration-200 ${isDragOver ? "text-accent" : "text-text-secondary group-hover:text-text-primary"}`}
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: isDragOver ? "#2563EB" : "#4B5563",
+              transition: "color 0.2s ease",
+            }}
           >
             {isDragOver
               ? "이미지를 놓아주세요"
               : "이미지를 드래그하거나 클릭하여 선택"}
           </p>
-          <p className="text-xs text-text-tertiary">
+          <p
+            style={{
+              fontSize: 12,
+              color: "#9CA3AF",
+              marginTop: 6,
+            }}
+          >
             JPG, PNG, GIF 파일 지원
           </p>
         </div>
 
         {/* Format badges */}
-        <div className="flex items-center gap-2">
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           {["JPG", "PNG", "GIF"].map((fmt) => (
             <span
               key={fmt}
-              className="px-2.5 py-1 text-[10px] font-medium text-text-tertiary bg-surface-elevated rounded-md border border-border-subtle"
+              style={{
+                padding: "4px 10px",
+                fontSize: 11,
+                fontWeight: 500,
+                color: "#9CA3AF",
+                background: "#F9FAFB",
+                borderRadius: 6,
+                border: "1px solid #F3F4F6",
+              }}
             >
               {fmt}
             </span>
