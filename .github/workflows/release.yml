@@ -51,9 +51,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           $tag = "${{ github.ref_name }}"
-          $exe = "src-tauri/target/release/PicSlim.exe"
+          $exe = "src-tauri/target/release/pic-slim.exe"
           if (Test-Path $exe) {
             $dest = "PicSlim_${tag}_portable.exe"
             Copy-Item $exe $dest
-            gh release upload $tag $dest --clobber
+            gh release upload $tag $dest --clobber || exit 1
           }
