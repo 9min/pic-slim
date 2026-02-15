@@ -190,7 +190,7 @@ export default function ImageList({
             <div
               style={{ fontSize: 12, color: "#15803D", marginTop: 3 }}
             >
-              {images.length}개 이미지에서 총{" "}
+              완료된 {doneImages.length}개 이미지에서 총{" "}
               <strong>{formatSize(savedBytes)}</strong> 절약했습니다 (
               {savedPercent}% 감소)
             </div>

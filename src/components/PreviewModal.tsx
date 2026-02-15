@@ -308,13 +308,14 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
                   borderRadius: 12,
                   background: "#F3F4F6",
                   cursor: "col-resize",
-                  outline: "none",
                 }}
                 onMouseDown={() => setIsDragging(true)}
                 onKeyDown={(e) => {
                   if (e.key === "ArrowLeft") {
+                    e.preventDefault();
                     setSliderPos((prev) => Math.max(0, prev - 2));
                   } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
                     setSliderPos((prev) => Math.min(100, prev + 2));
                   }
                 }}

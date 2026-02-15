@@ -180,7 +180,7 @@ export default function Settings({
           className="absolute bottom-0 left-0 right-0 text-center"
           style={{ padding: "16px 32px", borderTop: "1px solid #F3F4F6", fontSize: 10, color: "#9CA3AF" }}
         >
-          PicSlim v{version}
+          PicSlim 버전 {version}
         </div>
       </div>
     </>
