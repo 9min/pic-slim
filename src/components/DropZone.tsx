@@ -23,58 +23,70 @@ export default function DropZone({ isDragOver, onFiles }: DropZoneProps) {
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center p-8">
+    <div className="flex-1 flex items-center justify-center p-6">
       <button
         onClick={handleClick}
-        className={`w-full max-w-lg h-64 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-4 transition-all duration-200 cursor-pointer ${
+        className={`w-full max-w-md aspect-[4/3] rounded-2xl flex flex-col items-center justify-center gap-5 transition-all duration-300 cursor-pointer group ${
           isDragOver
-            ? "border-accent bg-sky-50 scale-[1.02]"
-            : "border-gray-300 hover:border-accent hover:bg-gray-50"
+            ? "bg-accent-subtle border-2 border-accent scale-[1.01] shadow-[0_0_0_4px_rgba(37,99,235,0.1)]"
+            : "bg-surface border-2 border-dashed border-border hover:border-accent/40 hover:bg-accent-subtle/50 hover:shadow-sm"
         }`}
       >
+        {/* Upload icon */}
         <div
-          className={`p-4 rounded-full transition-colors ${isDragOver ? "bg-accent/10" : "bg-gray-100"}`}
+          className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+            isDragOver
+              ? "bg-accent/10 scale-110"
+              : "bg-surface-elevated group-hover:bg-accent/5 group-hover:scale-105"
+          }`}
         >
           <svg
-            width="40"
-            height="40"
+            width="28"
+            height="28"
             viewBox="0 0 24 24"
             fill="none"
-            className={`transition-colors ${isDragOver ? "text-accent" : "text-gray-400"}`}
+            className={`transition-colors duration-200 ${isDragOver ? "text-accent" : "text-text-tertiary group-hover:text-accent"}`}
           >
             <path
-              d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+              d="M12 16V4m0 0l-4 4m4-4l4 4"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <polyline
-              points="17 8 12 3 7 8"
+            <path
+              d="M20 16.8A3 3 0 0 0 22 14a4.97 4.97 0 0 0-1.46-3.54A5 5 0 0 0 12 8a5 5 0 0 0-8.54 2.46A3 3 0 0 0 4 16.8"
               stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <line
-              x1="12"
-              y1="3"
-              x2="12"
-              y2="15"
-              stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
         </div>
-        <div className="text-center">
-          <p className="text-gray-600 font-medium">
-            이미지를 드래그하거나 클릭하여 선택하세요
+
+        <div className="text-center space-y-1.5">
+          <p
+            className={`text-sm font-semibold transition-colors duration-200 ${isDragOver ? "text-accent" : "text-text-secondary group-hover:text-text-primary"}`}
+          >
+            {isDragOver
+              ? "이미지를 놓아주세요"
+              : "이미지를 드래그하거나 클릭하여 선택"}
           </p>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-xs text-text-tertiary">
             JPG, PNG, GIF 파일 지원
           </p>
+        </div>
+
+        {/* Format badges */}
+        <div className="flex items-center gap-2">
+          {["JPEG", "PNG", "GIF"].map((fmt) => (
+            <span
+              key={fmt}
+              className="px-2.5 py-1 text-[10px] font-medium text-text-tertiary bg-surface-elevated rounded-md border border-border-subtle"
+            >
+              {fmt}
+            </span>
+          ))}
         </div>
       </button>
     </div>

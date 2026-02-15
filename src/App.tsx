@@ -79,7 +79,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-white">
+    <div className="h-screen flex flex-col bg-[#F9FAFB]">
       <Header onSettingsClick={() => setSettingsOpen(true)} />
 
       {images.length === 0 ? (
@@ -120,9 +120,11 @@ function App() {
 
       {/* Drag overlay for when images are already loaded */}
       {isDragOver && images.length > 0 && (
-        <div className="fixed inset-0 bg-accent/5 border-2 border-dashed border-accent z-30 flex items-center justify-center pointer-events-none">
-          <div className="bg-white px-6 py-4 rounded-xl shadow-lg text-accent font-medium">
-            이미지를 놓아서 추가하세요
+        <div className="fixed inset-0 bg-accent/5 backdrop-blur-[1px] border-2 border-dashed border-accent z-30 flex items-center justify-center pointer-events-none">
+          <div className="bg-surface px-6 py-4 rounded-xl shadow-lg border border-accent/20 animate-fade-in">
+            <p className="text-sm font-semibold text-accent">
+              이미지를 놓아서 추가하세요
+            </p>
           </div>
         </div>
       )}

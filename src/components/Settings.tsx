@@ -27,35 +27,33 @@ export default function Settings({
     }
   };
 
+  const qualityLabel =
+    quality >= 90 ? "최고 품질" : quality >= 80 ? "권장" : "작은 파일";
+
   return (
     <>
       {/* Backdrop */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/20 z-40" onClick={onClose} />
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-[2px] z-40 transition-opacity duration-200"
+          onClick={onClose}
+        />
       )}
 
       {/* Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 h-full w-80 bg-surface shadow-2xl z-50 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-          <h2 className="text-base font-semibold text-gray-800">설정</h2>
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+          <h2 className="text-sm font-bold text-text-primary">설정</h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+            className="p-1.5 rounded-lg hover:bg-surface-elevated text-text-tertiary hover:text-text-secondary transition-colors duration-200 cursor-pointer"
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -65,69 +63,83 @@ export default function Settings({
         <div className="p-5 space-y-6">
           {/* Quality slider */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              압축 품질
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="range"
-                min={60}
-                max={95}
-                value={quality}
-                onChange={(e) => onQualityChange(Number(e.target.value))}
-                className="flex-1 h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-accent"
-              />
-              <span className="text-sm font-mono text-gray-600 min-w-[32px] text-right">
-                {quality}
-              </span>
+            <div className="flex items-center justify-between mb-3">
+              <label className="text-[13px] font-semibold text-text-primary">
+                압축 품질
+              </label>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] text-text-tertiary">
+                  {qualityLabel}
+                </span>
+                <span className="text-sm font-bold text-accent tabular-nums">
+                  {quality}
+                </span>
+              </div>
             </div>
-            <div className="flex justify-between mt-1 text-xs text-gray-400">
-              <span>작은 파일</span>
-              <span>높은 품질</span>
+            <input
+              type="range"
+              min={60}
+              max={95}
+              value={quality}
+              onChange={(e) => onQualityChange(Number(e.target.value))}
+              className="w-full h-1.5 bg-border rounded-full appearance-none cursor-pointer accent-accent"
+            />
+            <div className="flex justify-between mt-2 text-[10px] text-text-tertiary">
+              <span>60 - 작은 파일</span>
+              <span>95 - 최고 품질</span>
             </div>
           </div>
 
           {/* Output directory */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-[13px] font-semibold text-text-primary mb-3">
               출력 폴더
             </label>
             <div className="flex gap-2">
               <div
-                className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-600 truncate"
+                className="flex-1 px-3 py-2.5 bg-surface-elevated border border-border rounded-lg text-[12px] text-text-secondary truncate"
                 title={outputDir}
               >
                 {outputDir || "선택되지 않음"}
               </div>
               <button
                 onClick={handleSelectFolder}
-                className="px-3 py-2 text-sm text-accent hover:bg-sky-50 border border-gray-200 rounded-lg transition-colors"
+                className="px-3 py-2.5 text-[12px] font-medium text-accent hover:bg-accent-subtle border border-border hover:border-accent/30 rounded-lg transition-all duration-200 cursor-pointer"
               >
                 변경
               </button>
             </div>
           </div>
 
-          {/* Info */}
-          <div className="pt-4 border-t border-gray-100">
-            <h3 className="text-xs font-medium text-gray-500 mb-2">
-              지원 포맷
+          <div className="h-px bg-border" />
+
+          {/* Engine info */}
+          <div>
+            <h3 className="text-[11px] font-semibold text-text-tertiary uppercase tracking-wider mb-3">
+              압축 엔진
             </h3>
-            <div className="space-y-1.5 text-xs text-gray-500">
-              <div className="flex justify-between">
-                <span>JPEG</span>
-                <span className="text-gray-400">mozjpeg (Progressive)</span>
-              </div>
-              <div className="flex justify-between">
-                <span>PNG</span>
-                <span className="text-gray-400">imagequant + oxipng</span>
-              </div>
-              <div className="flex justify-between">
-                <span>GIF</span>
-                <span className="text-gray-400">gif 최적화</span>
-              </div>
+            <div className="space-y-2">
+              {[
+                { fmt: "JPEG", engine: "mozjpeg", desc: "Progressive 인코딩", color: "bg-amber-500" },
+                { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "bg-blue-500" },
+                { fmt: "GIF", engine: "gif", desc: "프레임 최적화", color: "bg-purple-500" },
+              ].map(({ fmt, engine, desc, color }) => (
+                <div key={fmt} className="flex items-center gap-3 py-1.5">
+                  <div className={`w-1.5 h-1.5 rounded-full ${color}`} />
+                  <span className="text-[12px] font-medium text-text-primary w-10">{fmt}</span>
+                  <span className="text-[11px] text-text-tertiary flex-1">{engine}</span>
+                  <span className="text-[10px] text-text-tertiary">{desc}</span>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="absolute bottom-0 left-0 right-0 px-5 py-3 border-t border-border">
+          <p className="text-[10px] text-text-tertiary text-center">
+            PicSlim v0.1.0
+          </p>
         </div>
       </div>
     </>
