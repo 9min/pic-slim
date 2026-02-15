@@ -66,11 +66,11 @@ export default function ImageItem({
   };
 
   return (
-    <div className="flex items-center gap-3 px-4 py-2.5 hover:bg-surface-elevated/80 transition-colors duration-150 group animate-fade-in">
+    <div className="flex items-center gap-4 px-6 py-3 hover:bg-surface-elevated/80 transition-colors duration-150 group animate-fade-in">
       {/* Thumbnail */}
       <button
         onClick={() => onPreview(image)}
-        className="w-10 h-10 rounded-lg overflow-hidden bg-surface-elevated flex-shrink-0 cursor-pointer ring-1 ring-border hover:ring-accent/40 transition-all duration-200"
+        className="w-11 h-11 rounded-lg overflow-hidden bg-surface-elevated flex-shrink-0 cursor-pointer ring-1 ring-border hover:ring-accent/40 transition-all duration-200"
       >
         {image.thumbnail ? (
           <img
@@ -95,7 +95,7 @@ export default function ImageItem({
             {image.format === "Jpeg" ? "JPG" : image.format.toUpperCase()}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 mt-0.5">
+        <div className="flex items-center gap-1.5 mt-1">
           <span className="text-[11px] text-text-tertiary tabular-nums">
             {image.size_display}
           </span>

@@ -38,14 +38,14 @@ export default function ActionBar({
   };
 
   return (
-    <div className="flex items-center gap-3 px-5 py-3 bg-surface border-t border-border">
+    <div className="flex items-center gap-3 px-6 py-4 bg-surface border-t border-border">
       {appState === "compressing" ? (
         <ProgressBar done={progress.done} total={progress.total} />
       ) : appState === "done" ? (
         <>
           <button
             onClick={onOpenFolder}
-            className="flex items-center gap-2 px-4 py-2 bg-accent text-text-inverse rounded-lg hover:bg-accent-hover transition-colors duration-200 text-[13px] font-semibold cursor-pointer shadow-sm shadow-accent/20"
+            className="flex items-center gap-2 px-4 py-2.5 bg-accent text-text-inverse rounded-lg hover:bg-accent-hover transition-colors duration-200 text-[13px] font-semibold cursor-pointer shadow-sm shadow-accent/20"
             title={outputDir}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -55,7 +55,7 @@ export default function ActionBar({
           </button>
           <button
             onClick={onClear}
-            className="px-4 py-2 text-[13px] font-medium text-text-secondary hover:text-text-primary hover:bg-surface-elevated rounded-lg transition-colors duration-200 cursor-pointer"
+            className="px-4 py-2.5 text-[13px] font-medium text-text-secondary hover:text-text-primary hover:bg-surface-elevated rounded-lg transition-colors duration-200 cursor-pointer"
           >
             새로 시작
           </button>
@@ -64,7 +64,7 @@ export default function ActionBar({
         <>
           <button
             onClick={onCompress}
-            className="flex items-center gap-2 px-5 py-2 bg-accent text-text-inverse rounded-lg hover:bg-accent-hover transition-all duration-200 text-[13px] font-semibold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-sm shadow-accent/20 active:scale-[0.98]"
+            className="flex items-center gap-2 px-5 py-2.5 bg-accent text-text-inverse rounded-lg hover:bg-accent-hover transition-all duration-200 text-[13px] font-semibold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-sm shadow-accent/20 active:scale-[0.98]"
             disabled={appState !== "ready"}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -74,7 +74,7 @@ export default function ActionBar({
           </button>
           <button
             onClick={handleAddFiles}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-[13px] font-medium text-text-secondary hover:text-text-primary border border-border hover:border-text-tertiary rounded-lg transition-all duration-200 cursor-pointer hover:bg-surface-elevated"
+            className="flex items-center gap-1.5 px-3.5 py-2.5 text-[13px] font-medium text-text-secondary hover:text-text-primary border border-border hover:border-text-tertiary rounded-lg transition-all duration-200 cursor-pointer hover:bg-surface-elevated"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="12" y1="5" x2="12" y2="19" />

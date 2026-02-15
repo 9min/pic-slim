@@ -27,7 +27,7 @@ export default function ImageList({
   return (
     <div className="flex-1 flex flex-col min-h-0">
       {/* Summary bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-surface border-b border-border">
+      <div className="flex items-center justify-between px-6 py-3 bg-surface border-b border-border">
         <div className="flex items-center gap-3">
           <span className="text-xs font-medium text-text-secondary">
             {images.length}개 이미지
@@ -54,7 +54,7 @@ export default function ImageList({
       </div>
 
       {/* Scrollable image list */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto py-1">
         {images.map((image) => (
           <ImageItem
             key={image.id}
