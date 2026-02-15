@@ -33,6 +33,7 @@ export default function DropZone({ isDragOver, onFiles }: DropZoneProps) {
       }}
     >
       <button
+        type="button"
         onClick={handleClick}
         style={{
           width: "100%",

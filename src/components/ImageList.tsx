@@ -18,10 +18,10 @@ export default function ImageList({
     (sum, img) => sum + (img.compressed_size ?? img.size),
     0,
   );
-  const savedBytes = totalOriginal - totalCompressed;
+  const savedBytes = Math.max(0, totalOriginal - totalCompressed);
   const savedPercent =
     doneImages.length > 0 && totalOriginal > 0
-      ? Math.round((savedBytes / totalOriginal) * 100)
+      ? Math.max(0, Math.round(((totalOriginal - totalCompressed) / totalOriginal) * 100))
       : 0;
 
   const allDone =
@@ -80,7 +80,7 @@ export default function ImageList({
               {formatSize(totalOriginal)}
             </span>
           </div>
-          {doneImages.length > 0 && (
+          {doneImages.length > 0 && savedPercent > 0 && (
             <div
               className="animate-fade-in"
               style={{ display: "flex", alignItems: "center", gap: 8 }}

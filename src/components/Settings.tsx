@@ -61,7 +61,9 @@ export default function Settings({
             설정
           </h2>
           <button
+            type="button"
             onClick={onClose}
+            aria-label="설정 닫기"
             className="rounded-lg cursor-pointer"
             style={{ padding: 6, color: "#9CA3AF" }}
           >
@@ -77,7 +79,7 @@ export default function Settings({
           {/* Quality slider */}
           <div style={{ marginBottom: 32 }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#111827" }}>
+              <label htmlFor="quality-slider" style={{ fontSize: 13, fontWeight: 600, color: "#111827" }}>
                 압축 품질
               </label>
               <div className="flex items-center" style={{ gap: 8 }}>
@@ -90,6 +92,7 @@ export default function Settings({
               </div>
             </div>
             <input
+              id="quality-slider"
               type="range"
               min={60}
               max={95}
@@ -125,6 +128,7 @@ export default function Settings({
                 {outputDir || "선택되지 않음"}
               </div>
               <button
+                type="button"
                 onClick={handleSelectFolder}
                 className="cursor-pointer"
                 style={{
@@ -151,7 +155,7 @@ export default function Settings({
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
-                { fmt: "JPG", engine: "mozjpeg", desc: "Progressive", color: "#F59E0B" },
+                { fmt: "JPG", engine: "mozjpeg", desc: "프로그레시브 인코딩", color: "#F59E0B" },
                 { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "#3B82F6" },
                 { fmt: "GIF", engine: "gif", desc: "프레임 최적화", color: "#8B5CF6" },
               ].map(({ fmt, engine, desc, color }) => (

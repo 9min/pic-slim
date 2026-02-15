@@ -54,6 +54,7 @@ export default function ActionBar({
       ) : appState === "done" ? (
         <>
           <button
+            type="button"
             onClick={onOpenFolder}
             className="action-btn-primary"
             style={{
@@ -88,6 +89,7 @@ export default function ActionBar({
             폴더 열기
           </button>
           <button
+            type="button"
             onClick={onClear}
             style={{
               padding: "10px 20px",
@@ -108,6 +110,7 @@ export default function ActionBar({
       ) : (
         <>
           <button
+            type="button"
             onClick={onCompress}
             className="action-btn-primary"
             style={{
@@ -149,6 +152,7 @@ export default function ActionBar({
             압축 시작
           </button>
           <button
+            type="button"
             onClick={handleAddFiles}
             className="action-btn-secondary"
             style={{
