@@ -119,7 +119,8 @@ src-tauri/target/release/bundle/nsis/*.exe   # Windows 인스톨러 (tauri build
 
 ### Git 워크플로우
 
-- 브랜치 전략: `main` 보호 + feature/fix 브랜치에서 PR
+- **main 직접 푸시 절대 금지** - 어떤 경우에도 main에 직접 commit/push하지 않는다
+- 모든 변경은 반드시 feature/fix 브랜치 생성 → PR 생성 → 리뷰 통과 후 머지
 - PR 생성 시: CodeRabbit AI 자동 코드 리뷰 (한국어)
 - 머지 조건: CodeRabbit 리뷰 코멘트 전체 resolve + CI 통과
 - 릴리스: `v*` 태그 푸시 시 자동 빌드 + GitHub Release (draft)
