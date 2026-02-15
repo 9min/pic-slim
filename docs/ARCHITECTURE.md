@@ -204,6 +204,9 @@ images.par_iter().map(|img| {
 useDragDrop / DropZone
     │ paths: string[]
     ▼
+App.tsx: setIsLoading(true) → 로딩 스피너 오버레이 표시
+    │
+    ▼
 lib/tauri.ts → invoke("load_images", {paths})
     │
     ▼
@@ -221,6 +224,9 @@ ImageFileInfo[] → 프론트엔드
 useImageList.addImages()
     ├── 중복 필터링 (path 기반)
     └── status: "pending" 할당
+    │
+    ▼
+App.tsx: setIsLoading(false) → 로딩 스피너 해제
 ```
 
 ### 4.2 압축 플로우
@@ -320,7 +326,8 @@ Push tag v*
     ├── Node.js 22 + Rust stable + NASM 설치
     ├── npm ci
     ├── tauri-action (빌드 + NSIS 인스톨러 생성)
-    └── GitHub Release (draft) + .exe 첨부
+    ├── 포터블 exe 업로드 (PicSlim_v*_portable.exe)
+    └── GitHub Release (draft) + 인스톨러 + 포터블 exe 첨부
 ```
 
 ### 코드 리뷰 (CodeRabbit AI)
@@ -344,6 +351,7 @@ CodeRabbit 자동 리뷰 (한국어)
 | 대화 해결 필수 | CodeRabbit 리뷰 코멘트 모두 resolve |
 | force push 차단 | 활성화 |
 | 브랜치 삭제 차단 | 활성화 |
+| admin bypass 차단 | `enforce_admins: true` |
 
 ### 프로덕션 빌드 최적화 (Cargo.toml)
 

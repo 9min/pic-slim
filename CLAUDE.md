@@ -9,7 +9,7 @@ PicSlim은 이미지 용량 최적화 데스크톱 앱입니다. Tauri v2 + Reac
 - **프론트엔드**: React 19, TypeScript 5.8, Tailwind CSS v4, Vite 7
 - **백엔드**: Rust (Tauri v2)
 - **이미지 압축 엔진**: mozjpeg (JPEG), imagequant + oxipng (PNG), gif crate (GIF)
-- **빌드/배포**: GitHub Actions, NSIS 인스톨러
+- **빌드/배포**: GitHub Actions, NSIS 인스톨러 + 포터블 exe
 - **코드 리뷰**: CodeRabbit AI (`.coderabbit.yaml`)
 - **패키지 매니저**: npm
 
@@ -123,7 +123,8 @@ src-tauri/target/release/bundle/nsis/*.exe   # Windows 인스톨러 (tauri build
 - 모든 변경은 반드시 feature/fix 브랜치 생성 → PR 생성 → 리뷰 통과 후 머지
 - PR 생성 시: CodeRabbit AI 자동 코드 리뷰 (한국어)
 - 머지 조건: CodeRabbit 리뷰 코멘트 전체 resolve + CI 통과
-- 릴리스: `v*` 태그 푸시 시 자동 빌드 + GitHub Release (draft)
+- 릴리스: `v*` 태그 푸시 시 자동 빌드 + GitHub Release (draft) + 포터블 exe 첨부
+- Branch Protection: `enforce_admins: true` (admin도 직접 푸시 불가)
 
 ## Tauri 커맨드 (프론트-백 인터페이스)
 
