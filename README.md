@@ -12,7 +12,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/platform-Windows-blue" alt="Platform">
   <img src="https://img.shields.io/badge/version-0.1.0-green" alt="Version">
-  <img src="https://img.shields.io/badge/license-MIT-yellow" alt="License">
+  <img src="https://img.shields.io/badge/license-All%20Rights%20Reserved-red" alt="License">
 </p>
 
 ---
@@ -91,7 +91,14 @@ src-tauri/src/        # Rust 백엔드
 
 ## 라이선스
 
-MIT
+**All Rights Reserved.** 소스 코드는 열람만 허용됩니다. 저작권자의 사전 서면 동의 없이 다음 행위가 금지됩니다:
+
+- 복사, 복제, 수정, 배포
+- 상업적 또는 비상업적 사용
+- 2차 저작물 생성
+- 서브라이선싱
+
+자세한 내용은 [LICENSE](LICENSE) 파일을 참고하세요.
 
 ---
 
