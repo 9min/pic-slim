@@ -89,11 +89,15 @@ fn quantize_frame(
     liq.set_quality(0, quality as u8).ok()?;
 
     // Convert &[u8] to &[imagequant::RGBA]
+    let expected_len = width * height * 4;
+    if rgba_buf.len() < expected_len {
+        return None;
+    }
     let rgba_pixels: &[imagequant::RGBA] = unsafe {
         std::slice::from_raw_parts(rgba_buf.as_ptr() as *const imagequant::RGBA, width * height)
     };
 
-    let mut img = liq.new_image(rgba_pixels, width, height, 0.0).ok()?;
+    let mut img = liq.new_image_borrowed(rgba_pixels, width, height, 0.0).ok()?;
     let mut res = liq.quantize(&mut img).ok()?;
 
     // Lower dithering for GIF — frames transition fast so heavy dithering is noisy
@@ -122,10 +126,8 @@ fn fallback_write_frame(
 
     // Use gif::Frame::from_rgba to create an indexed frame from RGBA data
     let mut rgba_owned = rgba_buf.to_vec();
-    let fallback_frame =
+    let mut new_frame =
         gif::Frame::from_rgba(width as u16, height as u16, &mut rgba_owned);
-
-    let mut new_frame = fallback_frame;
     new_frame.delay = frame.delay;
     new_frame.dispose = frame.dispose;
     new_frame.left = frame.left;
