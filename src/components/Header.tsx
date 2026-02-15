@@ -4,7 +4,7 @@ interface HeaderProps {
 
 export default function Header({ onSettingsClick }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-surface border-b border-border">
+    <header className="flex items-center justify-between px-8 py-5 bg-surface border-b border-border">
       <div className="flex items-center gap-2.5">
         {/* Logo mark */}
         <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">

@@ -79,7 +79,7 @@ export default function DropZone({ isDragOver, onFiles }: DropZoneProps) {
 
         {/* Format badges */}
         <div className="flex items-center gap-2">
-          {["JPEG", "PNG", "GIF"].map((fmt) => (
+          {["JPG", "PNG", "GIF"].map((fmt) => (
             <span
               key={fmt}
               className="px-2.5 py-1 text-[10px] font-medium text-text-tertiary bg-surface-elevated rounded-md border border-border-subtle"
