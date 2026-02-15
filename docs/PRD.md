@@ -75,6 +75,7 @@
 - [x] 인터랙션 애니메이션 (fade-in, slide-in, shimmer, spin)
 - [x] `prefers-reduced-motion` 접근성 지원
 - [x] 드래그 오버 시각적 피드백 (블러 + 보더)
+- [x] 이미지 로딩 스피너 오버레이 (파일 로드 중 표시)
 
 ## 4. 미구현 기능 (향후 로드맵)
 

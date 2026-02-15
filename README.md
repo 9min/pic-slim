@@ -38,7 +38,10 @@
 
 ### 릴리스 다운로드
 
-[Releases](../../releases) 페이지에서 최신 `.exe` 인스톨러를 다운로드하여 설치하세요.
+[Releases](../../releases) 페이지에서 다운로드하세요.
+
+- **인스톨러** (`PicSlim_v*_x64-setup.exe`) - 설치 후 실행
+- **포터블** (`pic-slim_v*_portable.exe`) - 설치 없이 바로 실행
 
 ### 직접 빌드
 
