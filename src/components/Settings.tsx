@@ -42,12 +42,12 @@ export default function Settings({
 
       {/* Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-surface shadow-2xl z-50 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 right-0 h-full w-[360px] bg-surface shadow-2xl z-50 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+        <div className="flex items-center justify-between px-7 py-5 border-b border-border">
           <h2 className="text-sm font-bold text-text-primary">설정</h2>
           <button
             onClick={onClose}
@@ -60,10 +60,10 @@ export default function Settings({
           </button>
         </div>
 
-        <div className="p-5 space-y-6">
+        <div className="px-7 py-6 space-y-7">
           {/* Quality slider */}
           <div>
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-4">
               <label className="text-[13px] font-semibold text-text-primary">
                 압축 품질
               </label>
@@ -92,7 +92,7 @@ export default function Settings({
 
           {/* Output directory */}
           <div>
-            <label className="block text-[13px] font-semibold text-text-primary mb-3">
+            <label className="block text-[13px] font-semibold text-text-primary mb-4">
               출력 폴더
             </label>
             <div className="flex gap-2">
@@ -115,10 +115,10 @@ export default function Settings({
 
           {/* Engine info */}
           <div>
-            <h3 className="text-[11px] font-semibold text-text-tertiary uppercase tracking-wider mb-3">
+            <h3 className="text-[11px] font-semibold text-text-tertiary uppercase tracking-wider mb-4">
               압축 엔진
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {[
                 { fmt: "JPEG", engine: "mozjpeg", desc: "Progressive 인코딩", color: "bg-amber-500" },
                 { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "bg-blue-500" },
@@ -136,7 +136,7 @@ export default function Settings({
         </div>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 px-5 py-3 border-t border-border">
+        <div className="absolute bottom-0 left-0 right-0 px-7 py-4 border-t border-border">
           <p className="text-[10px] text-text-tertiary text-center">
             PicSlim v0.1.0
           </p>
