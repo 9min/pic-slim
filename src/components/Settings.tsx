@@ -1,4 +1,11 @@
 import { open } from "@tauri-apps/plugin-dialog";
+import { version } from "../../package.json";
+
+const ENGINES = [
+  { fmt: "JPG", engine: "mozjpeg", desc: "프로그레시브 인코딩", color: "#F59E0B" },
+  { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "#3B82F6" },
+  { fmt: "GIF", engine: "gif", desc: "프레임 최적화", color: "#8B5CF6" },
+] as const;
 
 interface SettingsProps {
   isOpen: boolean;
@@ -44,12 +51,14 @@ export default function Settings({
       {/* Panel */}
       <div
         className="fixed top-0 right-0 h-full z-50"
+        aria-hidden={!isOpen}
         style={{
           width: 380,
           background: "#fff",
           boxShadow: "-8px 0 30px rgba(0,0,0,0.08)",
           transform: isOpen ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+          visibility: isOpen ? "visible" : "hidden",
         }}
       >
         {/* Header */}
@@ -154,11 +163,7 @@ export default function Settings({
               압축 엔진
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {[
-                { fmt: "JPG", engine: "mozjpeg", desc: "프로그레시브 인코딩", color: "#F59E0B" },
-                { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "#3B82F6" },
-                { fmt: "GIF", engine: "gif", desc: "프레임 최적화", color: "#8B5CF6" },
-              ].map(({ fmt, engine, desc, color }) => (
+              {ENGINES.map(({ fmt, engine, desc, color }) => (
                 <div key={fmt} className="flex items-center" style={{ gap: 12 }}>
                   <div style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
                   <span style={{ fontSize: 12, fontWeight: 600, color: "#111827", width: 36 }}>{fmt}</span>
@@ -175,7 +180,7 @@ export default function Settings({
           className="absolute bottom-0 left-0 right-0 text-center"
           style={{ padding: "16px 32px", borderTop: "1px solid #F3F4F6", fontSize: 10, color: "#9CA3AF" }}
         >
-          PicSlim v0.1.0
+          PicSlim v{version}
         </div>
       </div>
     </>

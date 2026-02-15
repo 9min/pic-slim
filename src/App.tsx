@@ -79,7 +79,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-[#F9FAFB]">
+    <div className="h-screen flex flex-col" style={{ background: "#F9FAFB" }}>
       <Header onSettingsClick={() => setSettingsOpen(true)} />
 
       {images.length === 0 ? (

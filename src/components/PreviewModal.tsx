@@ -206,7 +206,9 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
             </div>
           </div>
           <button
+            type="button"
             onClick={onClose}
+            aria-label="미리보기 닫기"
             style={{
               width: 36,
               height: 36,
@@ -294,14 +296,28 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
               {/* Before/After comparison */}
               <div
                 ref={containerRef}
+                role="slider"
+                aria-label="원본과 압축 이미지 비교"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(sliderPos)}
+                tabIndex={0}
                 style={{
                   position: "relative",
                   overflow: "hidden",
                   borderRadius: 12,
                   background: "#F3F4F6",
                   cursor: "col-resize",
+                  outline: "none",
                 }}
                 onMouseDown={() => setIsDragging(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowLeft") {
+                    setSliderPos((prev) => Math.max(0, prev - 2));
+                  } else if (e.key === "ArrowRight") {
+                    setSliderPos((prev) => Math.min(100, prev + 2));
+                  }
+                }}
               >
                 {/* After (bottom layer - full) */}
                 <img

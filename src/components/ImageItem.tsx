@@ -19,7 +19,8 @@ export default function ImageItem({
   onRemove,
   onPreview,
 }: ImageItemProps) {
-  const badge = formatColors[image.format] || defaultColors;
+  const normalizedFormat = image.format.charAt(0).toUpperCase() + image.format.slice(1).toLowerCase();
+  const badge = formatColors[normalizedFormat] || defaultColors;
 
   const statusIndicator = () => {
     switch (image.status) {
@@ -135,6 +136,8 @@ export default function ImageItem({
             </span>
           </div>
         );
+      default:
+        return null;
     }
   };
 
