@@ -1,0 +1,36 @@
+[package]
+name = "pic-slim"
+version = "0.1.0"
+description = "PicSlim - 이미지 용량 최적화 툴"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "pic_slim_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+image = "0.25"
+mozjpeg = "0.10"
+oxipng = "10"
+imagequant = "4"
+lodepng = "3"
+gif = "0.13"
+rayon = "1.10"
+uuid = { version = "1", features = ["v4"] }
+tempfile = "3"
+base64 = "0.22"
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+opt-level = "s"
