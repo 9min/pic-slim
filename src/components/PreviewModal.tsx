@@ -64,35 +64,140 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
 
   if (!image) return null;
 
+  const formatBadge: Record<string, { bg: string; color: string; border: string }> = {
+    Jpeg: { bg: "#FFFBEB", color: "#D97706", border: "#FDE68A" },
+    Png: { bg: "#EFF6FF", color: "#2563EB", border: "#BFDBFE" },
+    Gif: { bg: "#F5F3FF", color: "#7C3AED", border: "#DDD6FE" },
+  };
+  const badge = formatBadge[image.format] || { bg: "#F9FAFB", color: "#6B7280", border: "#E5E7EB" };
+
   return (
     <div
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-8 animate-fade-in"
+      className="animate-fade-in"
       onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.6)",
+        backdropFilter: "blur(8px)",
+        zIndex: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 32,
+      }}
     >
       <div
-        className="bg-surface rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#fff",
+          borderRadius: 20,
+          boxShadow: "0 24px 48px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)",
+          maxWidth: 680,
+          width: "100%",
+          maxHeight: "85vh",
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+        }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-border">
-          <div className="min-w-0">
-            <h3 className="text-[13px] font-semibold text-text-primary truncate">
-              {image.name}
-            </h3>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[11px] text-text-tertiary tabular-nums">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "18px 24px",
+            borderBottom: "1px solid #F3F4F6",
+            flexShrink: 0,
+          }}
+        >
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <h3
+                style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "#111827",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {image.name}
+              </h3>
+              <span
+                style={{
+                  padding: "1px 6px",
+                  fontSize: 9,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  borderRadius: 4,
+                  border: `1px solid ${badge.border}`,
+                  background: badge.bg,
+                  color: badge.color,
+                  flexShrink: 0,
+                  lineHeight: "16px",
+                }}
+              >
+                {image.format === "Jpeg" ? "JPG" : image.format.toUpperCase()}
+              </span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                marginTop: 4,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "#9CA3AF",
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
                 {image.size_display}
               </span>
               {image.compressed_size_display && (
                 <>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-text-tertiary">
-                    <path d="M5 12h14m0 0l-4-4m4 4l-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M5 12h14m0 0l-4-4m4 4l-4 4"
+                      stroke="#D1D5DB"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
-                  <span className="text-[11px] font-semibold text-success tabular-nums">
+                  <span
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: "#16A34A",
+                      fontVariantNumeric: "tabular-nums",
+                    }}
+                  >
                     {image.compressed_size_display}
                   </span>
                   {image.ratio !== undefined && (
-                    <span className="text-[10px] font-medium text-success bg-success-bg px-1.5 py-0.5 rounded">
+                    <span
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 600,
+                        color: "#16A34A",
+                        background: "#F0FDF4",
+                        padding: "2px 8px",
+                        borderRadius: 6,
+                        lineHeight: "16px",
+                      }}
+                    >
                       {image.ratio}%
                     </span>
                   )}
@@ -102,9 +207,33 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-surface-elevated text-text-tertiary hover:text-text-secondary transition-colors duration-200 cursor-pointer"
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 10,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#F3F4F6",
+              border: "none",
+              color: "#6B7280",
+              cursor: "pointer",
+              flexShrink: 0,
+              marginLeft: 16,
+              transition: "all 0.15s ease",
+            }}
+            className="modal-close-btn"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -112,40 +241,97 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
         </div>
 
         {/* Preview area */}
-        <div className="flex-1 overflow-hidden p-5">
+        <div
+          style={{
+            flex: 1,
+            overflow: "hidden",
+            padding: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: 0,
+          }}
+        >
           {loading ? (
-            <div className="h-64 flex flex-col items-center justify-center gap-3 text-text-tertiary">
-              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-20" />
-                <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            <div
+              style={{
+                height: 256,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 12,
+                color: "#9CA3AF",
+              }}
+            >
+              <svg
+                className="animate-spin"
+                style={{ width: 24, height: 24 }}
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  opacity="0.2"
+                />
+                <path
+                  d="M4 12a8 8 0 018-8"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
               </svg>
-              <span className="text-xs">로딩 중...</span>
+              <span style={{ fontSize: 13, fontWeight: 500 }}>
+                로딩 중...
+              </span>
             </div>
           ) : compressedPreview ? (
-            <div className="select-none">
+            <div style={{ userSelect: "none", width: "100%" }}>
               {/* Before/After comparison */}
               <div
                 ref={containerRef}
-                className="relative overflow-hidden rounded-xl bg-surface-elevated cursor-col-resize"
+                style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  borderRadius: 12,
+                  background: "#F3F4F6",
+                  cursor: "col-resize",
+                }}
                 onMouseDown={() => setIsDragging(true)}
               >
                 {/* After (full) */}
                 <img
                   src={compressedPreview}
                   alt="압축 후"
-                  className="w-full block"
+                  style={{
+                    width: "100%",
+                    display: "block",
+                    maxHeight: "calc(85vh - 140px)",
+                    objectFit: "contain",
+                  }}
                   draggable={false}
                 />
                 {/* Before (clipped) */}
                 <div
-                  className="absolute top-0 left-0 h-full overflow-hidden"
-                  style={{ width: `${sliderPos}%` }}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    height: "100%",
+                    overflow: "hidden",
+                    width: `${sliderPos}%`,
+                  }}
                 >
                   <img
                     src={originalPreview}
                     alt="원본"
-                    className="block h-full"
                     style={{
+                      display: "block",
+                      height: "100%",
                       width: `${10000 / sliderPos}%`,
                       maxWidth: "none",
                     }}
@@ -154,34 +340,139 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
                 </div>
                 {/* Slider line */}
                 <div
-                  className="absolute top-0 bottom-0 w-px bg-white/80"
-                  style={{ left: `${sliderPos}%` }}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    bottom: 0,
+                    width: 2,
+                    background: "rgba(255,255,255,0.9)",
+                    left: `${sliderPos}%`,
+                    transform: "translateX(-1px)",
+                    boxShadow: "0 0 8px rgba(0,0,0,0.15)",
+                  }}
                 >
-                  <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 bg-surface rounded-full shadow-lg border border-border flex items-center justify-center">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2.5" strokeLinecap="round">
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 32,
+                      height: 32,
+                      background: "#fff",
+                      borderRadius: "50%",
+                      boxShadow:
+                        "0 2px 8px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#6B7280"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    >
                       <path d="M8 4L3 12l5 8M16 4l5 8-5 8" />
                     </svg>
                   </div>
                 </div>
                 {/* Labels */}
-                <div className="absolute top-3 left-3 px-2 py-1 bg-black/60 backdrop-blur-sm text-white text-[10px] font-medium rounded-md">
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    left: 12,
+                    padding: "4px 10px",
+                    background: "rgba(0,0,0,0.6)",
+                    backdropFilter: "blur(8px)",
+                    color: "#fff",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    borderRadius: 6,
+                  }}
+                >
                   원본
                 </div>
-                <div className="absolute top-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm text-white text-[10px] font-medium rounded-md">
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    right: 12,
+                    padding: "4px 10px",
+                    background: "rgba(0,0,0,0.6)",
+                    backdropFilter: "blur(8px)",
+                    color: "#fff",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    borderRadius: 6,
+                  }}
+                >
                   압축
                 </div>
               </div>
+              {/* Comparison hint */}
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: 12,
+                  fontSize: 11,
+                  color: "#9CA3AF",
+                }}
+              >
+                드래그하여 원본과 압축 이미지를 비교하세요
+              </div>
             </div>
           ) : originalPreview ? (
-            <div className="flex items-center justify-center">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
               <img
                 src={originalPreview}
                 alt="원본"
-                className="max-h-96 rounded-xl"
+                style={{
+                  maxHeight: "calc(85vh - 140px)",
+                  maxWidth: "100%",
+                  borderRadius: 12,
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+                  objectFit: "contain",
+                }}
               />
+              <div
+                style={{
+                  marginTop: 12,
+                  padding: "4px 12px",
+                  background: "#F3F4F6",
+                  borderRadius: 6,
+                  fontSize: 11,
+                  color: "#9CA3AF",
+                  fontWeight: 500,
+                }}
+              >
+                원본 이미지
+              </div>
             </div>
           ) : (
-            <div className="h-64 flex items-center justify-center text-text-tertiary text-xs">
+            <div
+              style={{
+                height: 256,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#9CA3AF",
+                fontSize: 13,
+              }}
+            >
               프리뷰를 불러올 수 없습니다
             </div>
           )}

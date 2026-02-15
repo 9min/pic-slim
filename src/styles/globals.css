@@ -89,6 +89,11 @@ body {
   transform: scale(0.98);
 }
 
+.modal-close-btn:hover {
+  background: #E5E7EB !important;
+  color: #374151 !important;
+}
+
 /* Animations */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(4px); }
