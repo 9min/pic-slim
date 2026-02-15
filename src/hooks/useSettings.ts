@@ -5,7 +5,7 @@ import { getDefaultOutputDir } from "../lib/tauri";
 const SETTINGS_KEY = "picslim_settings";
 
 const DEFAULT_SETTINGS: CompressionSettings = {
-  quality: 82,
+  quality: 90,
   output_dir: "",
 };
 
