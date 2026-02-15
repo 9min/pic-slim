@@ -303,7 +303,7 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
                 }}
                 onMouseDown={() => setIsDragging(true)}
               >
-                {/* After (full) */}
+                {/* After (bottom layer - full) */}
                 <img
                   src={compressedPreview}
                   alt="압축 후"
@@ -315,29 +315,21 @@ export default function PreviewModal({ image, onClose }: PreviewModalProps) {
                   }}
                   draggable={false}
                 />
-                {/* Before (clipped) */}
-                <div
+                {/* Before (top layer - clip-path) */}
+                <img
+                  src={originalPreview}
+                  alt="원본"
                   style={{
                     position: "absolute",
                     top: 0,
                     left: 0,
+                    width: "100%",
                     height: "100%",
-                    overflow: "hidden",
-                    width: `${sliderPos}%`,
+                    objectFit: "contain",
+                    clipPath: `inset(0 ${100 - sliderPos}% 0 0)`,
                   }}
-                >
-                  <img
-                    src={originalPreview}
-                    alt="원본"
-                    style={{
-                      display: "block",
-                      height: "100%",
-                      width: `${10000 / sliderPos}%`,
-                      maxWidth: "none",
-                    }}
-                    draggable={false}
-                  />
-                </div>
+                  draggable={false}
+                />
                 {/* Slider line */}
                 <div
                   style={{
