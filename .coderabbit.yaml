@@ -1,0 +1,19 @@
+language: "ko-KR"
+reviews:
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  path_instructions:
+    - path: "src/**/*.tsx"
+      instructions: "React 19 함수 컴포넌트입니다. Tailwind CSS v4 인라인 스타일을 사용합니다. UI 텍스트는 한국어입니다."
+    - path: "src/**/*.ts"
+      instructions: "TypeScript 코드입니다. Tauri v2 IPC invoke 패턴과 커스텀 훅 패턴을 사용합니다."
+    - path: "src-tauri/src/**/*.rs"
+      instructions: "Rust 백엔드입니다. Tauri v2 커맨드, rayon 병렬처리, 이미지 압축 엔진을 포함합니다. 에러 메시지는 한국어입니다."
+  auto_review:
+    enabled: true
+    drafts: false
+chat:
+  auto_reply: true
