@@ -125,6 +125,9 @@ function App() {
       {/* Loading overlay */}
       {isLoading && (
         <div
+          role="status"
+          aria-live="polite"
+          aria-label="이미지 로딩 중"
           style={{
             position: "fixed",
             inset: 0,
@@ -146,7 +149,8 @@ function App() {
             }}
           >
             <svg
-              className="animate-spin"
+              className="animate-spin motion-reduce:animate-none"
+              aria-hidden="true"
               width="32"
               height="32"
               viewBox="0 0 24 24"
