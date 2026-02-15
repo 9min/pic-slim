@@ -19,7 +19,9 @@ export default function ImageItem({
   onRemove,
   onPreview,
 }: ImageItemProps) {
-  const badge = formatColors[image.format] || defaultColors;
+  const normalizedFormat = image.format.charAt(0).toUpperCase() + image.format.slice(1).toLowerCase();
+  const badge = formatColors[normalizedFormat] || defaultColors;
+  const displayFormat = normalizedFormat === "Jpeg" ? "JPG" : normalizedFormat.toUpperCase();
 
   const statusIndicator = () => {
     switch (image.status) {
@@ -135,6 +137,8 @@ export default function ImageItem({
             </span>
           </div>
         );
+      default:
+        return null;
     }
   };
 
@@ -212,7 +216,7 @@ export default function ImageItem({
               letterSpacing: "0.02em",
             }}
           >
-            {image.format === "Jpeg" ? "JPG" : image.format.toUpperCase()}
+            {displayFormat}
           </span>
         </div>
         <div

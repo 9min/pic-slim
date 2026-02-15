@@ -12,16 +12,17 @@ export default function ImageList({
   onRemove,
   onPreview,
 }: ImageListProps) {
-  const totalOriginal = images.reduce((sum, img) => sum + img.size, 0);
   const doneImages = images.filter((img) => img.status === "done");
+  const doneOriginal = doneImages.reduce((sum, img) => sum + img.size, 0);
+  const totalOriginal = images.reduce((sum, img) => sum + img.size, 0);
   const totalCompressed = doneImages.reduce(
     (sum, img) => sum + (img.compressed_size ?? img.size),
     0,
   );
-  const savedBytes = Math.max(0, totalOriginal - totalCompressed);
+  const savedBytes = Math.max(0, doneOriginal - totalCompressed);
   const savedPercent =
-    doneImages.length > 0 && totalOriginal > 0
-      ? Math.max(0, Math.round(((totalOriginal - totalCompressed) / totalOriginal) * 100))
+    doneImages.length > 0 && doneOriginal > 0
+      ? Math.max(0, Math.round(((doneOriginal - totalCompressed) / doneOriginal) * 100))
       : 0;
 
   const allDone =
@@ -189,7 +190,7 @@ export default function ImageList({
             <div
               style={{ fontSize: 12, color: "#15803D", marginTop: 3 }}
             >
-              {images.length}개 이미지에서 총{" "}
+              완료된 {doneImages.length}개 이미지에서 총{" "}
               <strong>{formatSize(savedBytes)}</strong> 절약했습니다 (
               {savedPercent}% 감소)
             </div>
