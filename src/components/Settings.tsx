@@ -27,107 +27,155 @@ export default function Settings({
     }
   };
 
+  const qualityLabel =
+    quality >= 90 ? "최고 품질" : quality >= 80 ? "권장" : "작은 파일";
+
   return (
     <>
       {/* Backdrop */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/20 z-40" onClick={onClose} />
+        <div
+          className="fixed inset-0 z-40"
+          style={{ background: "rgba(0,0,0,0.3)", backdropFilter: "blur(2px)" }}
+          onClick={onClose}
+        />
       )}
 
       {/* Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className="fixed top-0 right-0 h-full z-50"
+        style={{
+          width: 380,
+          background: "#fff",
+          boxShadow: "-8px 0 30px rgba(0,0,0,0.08)",
+          transform: isOpen ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
       >
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-          <h2 className="text-base font-semibold text-gray-800">설정</h2>
+        {/* Header */}
+        <div
+          className="flex items-center justify-between"
+          style={{ padding: "24px 32px", borderBottom: "1px solid #E5E7EB" }}
+        >
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: "#111827" }}>
+            설정
+          </h2>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label="설정 닫기"
+            className="rounded-lg cursor-pointer"
+            style={{ padding: 6, color: "#9CA3AF" }}
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
         </div>
 
-        <div className="p-5 space-y-6">
+        {/* Content */}
+        <div style={{ padding: "28px 32px" }}>
           {/* Quality slider */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              압축 품질
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="range"
-                min={60}
-                max={95}
-                value={quality}
-                onChange={(e) => onQualityChange(Number(e.target.value))}
-                className="flex-1 h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-accent"
-              />
-              <span className="text-sm font-mono text-gray-600 min-w-[32px] text-right">
-                {quality}
-              </span>
+          <div style={{ marginBottom: 32 }}>
+            <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
+              <label htmlFor="quality-slider" style={{ fontSize: 13, fontWeight: 600, color: "#111827" }}>
+                압축 품질
+              </label>
+              <div className="flex items-center" style={{ gap: 8 }}>
+                <span style={{ fontSize: 11, color: "#9CA3AF" }}>
+                  {qualityLabel}
+                </span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: "#2563EB" }}>
+                  {quality}
+                </span>
+              </div>
             </div>
-            <div className="flex justify-between mt-1 text-xs text-gray-400">
-              <span>작은 파일</span>
-              <span>높은 품질</span>
+            <input
+              id="quality-slider"
+              type="range"
+              min={60}
+              max={95}
+              value={quality}
+              onChange={(e) => onQualityChange(Number(e.target.value))}
+              className="w-full cursor-pointer"
+              style={{ height: 6, accentColor: "#2563EB" }}
+            />
+            <div className="flex justify-between" style={{ marginTop: 10, fontSize: 10, color: "#9CA3AF" }}>
+              <span>60 - 작은 파일</span>
+              <span>95 - 최고 품질</span>
             </div>
           </div>
 
           {/* Output directory */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div style={{ marginBottom: 32 }}>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 14 }}>
               출력 폴더
             </label>
-            <div className="flex gap-2">
+            <div className="flex" style={{ gap: 10 }}>
               <div
-                className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-600 truncate"
+                className="flex-1 truncate"
+                style={{
+                  padding: "10px 14px",
+                  background: "#FAFAFA",
+                  border: "1px solid #E5E7EB",
+                  borderRadius: 8,
+                  fontSize: 12,
+                  color: "#4B5563",
+                }}
                 title={outputDir}
               >
                 {outputDir || "선택되지 않음"}
               </div>
               <button
+                type="button"
                 onClick={handleSelectFolder}
-                className="px-3 py-2 text-sm text-accent hover:bg-sky-50 border border-gray-200 rounded-lg transition-colors"
+                className="cursor-pointer"
+                style={{
+                  padding: "10px 16px",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#2563EB",
+                  border: "1px solid #E5E7EB",
+                  borderRadius: 8,
+                  background: "transparent",
+                }}
               >
                 변경
               </button>
             </div>
           </div>
 
-          {/* Info */}
-          <div className="pt-4 border-t border-gray-100">
-            <h3 className="text-xs font-medium text-gray-500 mb-2">
-              지원 포맷
+          <div style={{ height: 1, background: "#F3F4F6", marginBottom: 28 }} />
+
+          {/* Engine info */}
+          <div>
+            <h3 style={{ fontSize: 11, fontWeight: 600, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 16 }}>
+              압축 엔진
             </h3>
-            <div className="space-y-1.5 text-xs text-gray-500">
-              <div className="flex justify-between">
-                <span>JPEG</span>
-                <span className="text-gray-400">mozjpeg (Progressive)</span>
-              </div>
-              <div className="flex justify-between">
-                <span>PNG</span>
-                <span className="text-gray-400">imagequant + oxipng</span>
-              </div>
-              <div className="flex justify-between">
-                <span>GIF</span>
-                <span className="text-gray-400">gif 최적화</span>
-              </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {[
+                { fmt: "JPG", engine: "mozjpeg", desc: "프로그레시브 인코딩", color: "#F59E0B" },
+                { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "#3B82F6" },
+                { fmt: "GIF", engine: "gif", desc: "프레임 최적화", color: "#8B5CF6" },
+              ].map(({ fmt, engine, desc, color }) => (
+                <div key={fmt} className="flex items-center" style={{ gap: 12 }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, fontWeight: 600, color: "#111827", width: 36 }}>{fmt}</span>
+                  <span style={{ fontSize: 11, color: "#9CA3AF", flex: 1 }}>{engine}</span>
+                  <span style={{ fontSize: 10, color: "#9CA3AF" }}>{desc}</span>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div
+          className="absolute bottom-0 left-0 right-0 text-center"
+          style={{ padding: "16px 32px", borderTop: "1px solid #F3F4F6", fontSize: 10, color: "#9CA3AF" }}
+        >
+          PicSlim v0.1.0
         </div>
       </div>
     </>

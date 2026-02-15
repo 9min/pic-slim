@@ -23,58 +23,123 @@ export default function DropZone({ isDragOver, onFiles }: DropZoneProps) {
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center p-8">
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 24,
+      }}
+    >
       <button
+        type="button"
         onClick={handleClick}
-        className={`w-full max-w-lg h-64 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-4 transition-all duration-200 cursor-pointer ${
-          isDragOver
-            ? "border-accent bg-sky-50 scale-[1.02]"
-            : "border-gray-300 hover:border-accent hover:bg-gray-50"
-        }`}
+        style={{
+          width: "100%",
+          maxWidth: 420,
+          aspectRatio: "4/3",
+          borderRadius: 20,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 20,
+          cursor: "pointer",
+          transition: "all 0.3s ease",
+          background: isDragOver ? "#EFF6FF" : "#fff",
+          border: isDragOver
+            ? "2px solid #2563EB"
+            : "2px dashed #D1D5DB",
+          boxShadow: isDragOver
+            ? "0 0 0 4px rgba(37,99,235,0.1), 0 4px 12px rgba(0,0,0,0.05)"
+            : "0 1px 3px rgba(0,0,0,0.02)",
+          transform: isDragOver ? "scale(1.01)" : "scale(1)",
+        }}
       >
+        {/* Upload icon */}
         <div
-          className={`p-4 rounded-full transition-colors ${isDragOver ? "bg-accent/10" : "bg-gray-100"}`}
+          style={{
+            width: 64,
+            height: 64,
+            borderRadius: 16,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: isDragOver ? "rgba(37,99,235,0.08)" : "#F9FAFB",
+            transition: "all 0.3s ease",
+            transform: isDragOver ? "scale(1.1)" : "scale(1)",
+          }}
         >
           <svg
-            width="40"
-            height="40"
+            width="28"
+            height="28"
             viewBox="0 0 24 24"
             fill="none"
-            className={`transition-colors ${isDragOver ? "text-accent" : "text-gray-400"}`}
+            style={{
+              color: isDragOver ? "#2563EB" : "#9CA3AF",
+              transition: "color 0.2s ease",
+            }}
           >
             <path
-              d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+              d="M12 16V4m0 0l-4 4m4-4l4 4"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <polyline
-              points="17 8 12 3 7 8"
+            <path
+              d="M20 16.8A3 3 0 0 0 22 14a4.97 4.97 0 0 0-1.46-3.54A5 5 0 0 0 12 8a5 5 0 0 0-8.54 2.46A3 3 0 0 0 4 16.8"
               stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <line
-              x1="12"
-              y1="3"
-              x2="12"
-              y2="15"
-              stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
         </div>
-        <div className="text-center">
-          <p className="text-gray-600 font-medium">
-            이미지를 드래그하거나 클릭하여 선택하세요
+
+        <div style={{ textAlign: "center" }}>
+          <p
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: isDragOver ? "#2563EB" : "#4B5563",
+              transition: "color 0.2s ease",
+            }}
+          >
+            {isDragOver
+              ? "이미지를 놓아주세요"
+              : "이미지를 드래그하거나 클릭하여 선택"}
           </p>
-          <p className="text-gray-400 text-sm mt-1">
+          <p
+            style={{
+              fontSize: 12,
+              color: "#9CA3AF",
+              marginTop: 6,
+            }}
+          >
             JPG, PNG, GIF 파일 지원
           </p>
+        </div>
+
+        {/* Format badges */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {["JPG", "PNG", "GIF"].map((fmt) => (
+            <span
+              key={fmt}
+              style={{
+                padding: "4px 10px",
+                fontSize: 11,
+                fontWeight: 500,
+                color: "#9CA3AF",
+                background: "#F9FAFB",
+                borderRadius: 6,
+                border: "1px solid #F3F4F6",
+              }}
+            >
+              {fmt}
+            </span>
+          ))}
         </div>
       </button>
     </div>
