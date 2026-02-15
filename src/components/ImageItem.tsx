@@ -66,7 +66,10 @@ export default function ImageItem({
   };
 
   return (
-    <div className="flex items-center gap-4 px-6 py-3 hover:bg-surface-elevated/80 transition-colors duration-150 group animate-fade-in">
+    <div
+      className="flex items-center transition-colors duration-150 group animate-fade-in"
+      style={{ gap: 16, padding: "12px 24px" }}
+    >
       {/* Thumbnail */}
       <button
         onClick={() => onPreview(image)}

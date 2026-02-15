@@ -35,43 +35,56 @@ export default function Settings({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-[2px] z-40 transition-opacity duration-200"
+          className="fixed inset-0 z-40"
+          style={{ background: "rgba(0,0,0,0.3)", backdropFilter: "blur(2px)" }}
           onClick={onClose}
         />
       )}
 
       {/* Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-[360px] bg-surface shadow-2xl z-50 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className="fixed top-0 right-0 h-full z-50"
+        style={{
+          width: 380,
+          background: "#fff",
+          boxShadow: "-8px 0 30px rgba(0,0,0,0.08)",
+          transform: isOpen ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-7 py-5 border-b border-border">
-          <h2 className="text-sm font-bold text-text-primary">설정</h2>
+        <div
+          className="flex items-center justify-between"
+          style={{ padding: "24px 32px", borderBottom: "1px solid #E5E7EB" }}
+        >
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: "#111827" }}>
+            설정
+          </h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-surface-elevated text-text-tertiary hover:text-text-secondary transition-colors duration-200 cursor-pointer"
+            className="rounded-lg cursor-pointer"
+            style={{ padding: 6, color: "#9CA3AF" }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
         </div>
 
-        <div className="px-7 py-6 space-y-7">
+        {/* Content */}
+        <div style={{ padding: "28px 32px" }}>
           {/* Quality slider */}
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <label className="text-[13px] font-semibold text-text-primary">
+          <div style={{ marginBottom: 32 }}>
+            <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: "#111827" }}>
                 압축 품질
               </label>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] text-text-tertiary">
+              <div className="flex items-center" style={{ gap: 8 }}>
+                <span style={{ fontSize: 11, color: "#9CA3AF" }}>
                   {qualityLabel}
                 </span>
-                <span className="text-sm font-bold text-accent tabular-nums">
+                <span style={{ fontSize: 15, fontWeight: 700, color: "#2563EB" }}>
                   {quality}
                 </span>
               </div>
@@ -82,53 +95,71 @@ export default function Settings({
               max={95}
               value={quality}
               onChange={(e) => onQualityChange(Number(e.target.value))}
-              className="w-full h-1.5 bg-border rounded-full appearance-none cursor-pointer accent-accent"
+              className="w-full cursor-pointer"
+              style={{ height: 6, accentColor: "#2563EB" }}
             />
-            <div className="flex justify-between mt-2 text-[10px] text-text-tertiary">
+            <div className="flex justify-between" style={{ marginTop: 10, fontSize: 10, color: "#9CA3AF" }}>
               <span>60 - 작은 파일</span>
               <span>95 - 최고 품질</span>
             </div>
           </div>
 
           {/* Output directory */}
-          <div>
-            <label className="block text-[13px] font-semibold text-text-primary mb-4">
+          <div style={{ marginBottom: 32 }}>
+            <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 14 }}>
               출력 폴더
             </label>
-            <div className="flex gap-2">
+            <div className="flex" style={{ gap: 10 }}>
               <div
-                className="flex-1 px-3 py-2.5 bg-surface-elevated border border-border rounded-lg text-[12px] text-text-secondary truncate"
+                className="flex-1 truncate"
+                style={{
+                  padding: "10px 14px",
+                  background: "#FAFAFA",
+                  border: "1px solid #E5E7EB",
+                  borderRadius: 8,
+                  fontSize: 12,
+                  color: "#4B5563",
+                }}
                 title={outputDir}
               >
                 {outputDir || "선택되지 않음"}
               </div>
               <button
                 onClick={handleSelectFolder}
-                className="px-3 py-2.5 text-[12px] font-medium text-accent hover:bg-accent-subtle border border-border hover:border-accent/30 rounded-lg transition-all duration-200 cursor-pointer"
+                className="cursor-pointer"
+                style={{
+                  padding: "10px 16px",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#2563EB",
+                  border: "1px solid #E5E7EB",
+                  borderRadius: 8,
+                  background: "transparent",
+                }}
               >
                 변경
               </button>
             </div>
           </div>
 
-          <div className="h-px bg-border" />
+          <div style={{ height: 1, background: "#F3F4F6", marginBottom: 28 }} />
 
           {/* Engine info */}
           <div>
-            <h3 className="text-[11px] font-semibold text-text-tertiary uppercase tracking-wider mb-4">
+            <h3 style={{ fontSize: 11, fontWeight: 600, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 16 }}>
               압축 엔진
             </h3>
-            <div className="space-y-3">
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
-                { fmt: "JPEG", engine: "mozjpeg", desc: "Progressive 인코딩", color: "bg-amber-500" },
-                { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "bg-blue-500" },
-                { fmt: "GIF", engine: "gif", desc: "프레임 최적화", color: "bg-purple-500" },
+                { fmt: "JPG", engine: "mozjpeg", desc: "Progressive", color: "#F59E0B" },
+                { fmt: "PNG", engine: "imagequant + oxipng", desc: "양자화 + 무손실", color: "#3B82F6" },
+                { fmt: "GIF", engine: "gif", desc: "프레임 최적화", color: "#8B5CF6" },
               ].map(({ fmt, engine, desc, color }) => (
-                <div key={fmt} className="flex items-center gap-3 py-1.5">
-                  <div className={`w-1.5 h-1.5 rounded-full ${color}`} />
-                  <span className="text-[12px] font-medium text-text-primary w-10">{fmt}</span>
-                  <span className="text-[11px] text-text-tertiary flex-1">{engine}</span>
-                  <span className="text-[10px] text-text-tertiary">{desc}</span>
+                <div key={fmt} className="flex items-center" style={{ gap: 12 }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, fontWeight: 600, color: "#111827", width: 36 }}>{fmt}</span>
+                  <span style={{ fontSize: 11, color: "#9CA3AF", flex: 1 }}>{engine}</span>
+                  <span style={{ fontSize: 10, color: "#9CA3AF" }}>{desc}</span>
                 </div>
               ))}
             </div>
@@ -136,10 +167,11 @@ export default function Settings({
         </div>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 px-7 py-4 border-t border-border">
-          <p className="text-[10px] text-text-tertiary text-center">
-            PicSlim v0.1.0
-          </p>
+        <div
+          className="absolute bottom-0 left-0 right-0 text-center"
+          style={{ padding: "16px 32px", borderTop: "1px solid #F3F4F6", fontSize: 10, color: "#9CA3AF" }}
+        >
+          PicSlim v0.1.0
         </div>
       </div>
     </>

@@ -38,7 +38,15 @@ export default function ActionBar({
   };
 
   return (
-    <div className="flex items-center gap-3 px-6 py-4 bg-surface border-t border-border">
+    <div
+      className="flex items-center"
+      style={{
+        gap: 12,
+        padding: "16px 24px",
+        background: "var(--color-surface, #fff)",
+        borderTop: "1px solid var(--color-border, #E5E7EB)",
+      }}
+    >
       {appState === "compressing" ? (
         <ProgressBar done={progress.done} total={progress.total} />
       ) : appState === "done" ? (

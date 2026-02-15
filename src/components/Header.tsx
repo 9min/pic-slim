@@ -4,10 +4,25 @@ interface HeaderProps {
 
 export default function Header({ onSettingsClick }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between px-8 py-5 bg-surface border-b border-border">
-      <div className="flex items-center gap-2.5">
+    <header
+      className="flex items-center justify-between"
+      style={{
+        padding: "20px 32px",
+        background: "var(--color-surface, #fff)",
+        borderBottom: "1px solid var(--color-border, #E5E7EB)",
+      }}
+    >
+      <div className="flex items-center" style={{ gap: 10 }}>
         {/* Logo mark */}
-        <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+        <div
+          className="flex items-center justify-center"
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: 8,
+            background: "var(--color-accent, #2563EB)",
+          }}
+        >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
             <path
               d="M21 3H3v18h18V3z"
@@ -33,10 +48,10 @@ export default function Header({ onSettingsClick }: HeaderProps) {
           </svg>
         </div>
         <div>
-          <h1 className="text-sm font-bold text-text-primary tracking-tight leading-none">
+          <h1 style={{ fontSize: 14, fontWeight: 700, color: "#111827", letterSpacing: "-0.01em", lineHeight: 1 }}>
             PicSlim
           </h1>
-          <p className="text-[11px] text-text-tertiary leading-none mt-0.5">
+          <p style={{ fontSize: 11, color: "#9CA3AF", lineHeight: 1, marginTop: 3 }}>
             이미지 용량 최적화
           </p>
         </div>
@@ -44,7 +59,14 @@ export default function Header({ onSettingsClick }: HeaderProps) {
 
       <button
         onClick={onSettingsClick}
-        className="p-2 rounded-lg hover:bg-surface-elevated text-text-tertiary hover:text-text-secondary transition-colors duration-200 cursor-pointer"
+        className="cursor-pointer"
+        style={{
+          padding: 8,
+          borderRadius: 8,
+          color: "#9CA3AF",
+          background: "transparent",
+          border: "none",
+        }}
         title="설정"
       >
         <svg
