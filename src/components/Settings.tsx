@@ -181,7 +181,7 @@ export default function Settings({
           style={{ padding: "16px 32px", borderTop: "1px solid #F3F4F6", fontSize: 10, color: "#9CA3AF" }}
         >
           PicSlim 버전 {version}
-          <div style={{ marginTop: 4 }}>Made by 9min</div>
+          <div style={{ marginTop: 4 }}>© 2026 9min. All Rights Reserved.</div>
         </div>
       </div>
     </>
