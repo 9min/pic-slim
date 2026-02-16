@@ -96,6 +96,22 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, Vec<DecodedFrame>),
     let h = reader.height();
     let canvas_size = w as usize * h as usize * 4;
 
+    // Derive background fill color from global palette + bg_color index
+    let bg_fill = {
+        let bg_idx = reader.bg_color().unwrap_or(0);
+        match reader.global_palette() {
+            Some(pal) => {
+                let offset = bg_idx * 3;
+                if offset + 2 < pal.len() {
+                    [pal[offset], pal[offset + 1], pal[offset + 2], 0xFF]
+                } else {
+                    [0, 0, 0, 0]
+                }
+            }
+            None => [0, 0, 0, 0],
+        }
+    };
+
     let mut frames: Vec<DecodedFrame> = Vec::new();
     // Canvas tracks the cumulative composited image (disposal-aware).
     let mut canvas = vec![0u8; canvas_size];
@@ -110,6 +126,13 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, Vec<DecodedFrame>),
         let fh = frame.height as usize;
         let delay = frame.delay;
         let dispose = frame.dispose;
+
+        // Snapshot canvas BEFORE compositing for DisposalMethod::Previous
+        let pre_composite = if dispose == gif::DisposalMethod::Previous {
+            Some(canvas.clone())
+        } else {
+            None
+        };
 
         // Composite the sub-frame onto the canvas
         let rgba_buf = &frame.buffer;
@@ -142,7 +165,7 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, Vec<DecodedFrame>),
         // Handle disposal for the NEXT frame's base
         match dispose {
             gif::DisposalMethod::Background => {
-                // Clear the sub-frame region to transparent
+                // Fill sub-frame region with GIF logical background color
                 for row in 0..fh {
                     let cy = ft + row;
                     if cy >= h as usize {
@@ -154,16 +177,14 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, Vec<DecodedFrame>),
                             break;
                         }
                         let idx = (cy * w as usize + cx) * 4;
-                        canvas[idx..idx + 4].copy_from_slice(&[0, 0, 0, 0]);
+                        canvas[idx..idx + 4].copy_from_slice(&bg_fill);
                     }
                 }
             }
             gif::DisposalMethod::Previous => {
-                // Restore to the canvas before this frame was composited.
-                // We already pushed the composited snapshot, so restore from the
-                // previous frame's canvas (or blank if this is the first).
-                if frames.len() >= 2 {
-                    canvas.copy_from_slice(&frames[frames.len() - 2].canvas);
+                // Restore canvas to the state before this frame was composited
+                if let Some(prev) = pre_composite {
+                    canvas.copy_from_slice(&prev);
                 } else {
                     canvas.fill(0);
                 }
