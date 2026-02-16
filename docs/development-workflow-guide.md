@@ -86,7 +86,7 @@ Rust 백엔드 (`src-tauri/.gitignore`) - Tauri 프로젝트인 경우:
 
 ### 작업 흐름
 
-```
+```text
 1. main에서 새 브랜치 생성
    $ git checkout main
    $ git pull origin main
@@ -125,7 +125,7 @@ Rust 백엔드 (`src-tauri/.gitignore`) - Tauri 프로젝트인 경우:
 
 [Conventional Commits](https://www.conventionalcommits.org/) 기반:
 
-```
+```text
 <type>: <description>
 ```
 
@@ -244,7 +244,7 @@ path_instructions:
 
 ### 리뷰 워크플로우
 
-```
+```text
 1. PR 생성
 2. CodeRabbit이 자동으로 리뷰 시작 (보통 1-2분)
 3. 리뷰 결과:
@@ -469,7 +469,7 @@ jobs:
 
 ### 릴리스 흐름
 
-```
+```text
 1. 모든 작업이 main에 머지된 상태에서 릴리스 준비
 
 2. 버전 업데이트 (PR로 진행)
@@ -581,7 +581,7 @@ src-tauri/target/release/bundle/nsis/*.exe     # NSIS 인스톨러
 
 ### PR 제출 전 로컬 체크리스트
 
-```
+```text
 [ ] npx tsc --noEmit  → 타입 에러 없음
 [ ] npm run tauri dev  → 앱 정상 실행
 [ ] 변경한 기능 수동 테스트 완료
@@ -597,7 +597,7 @@ src-tauri/target/release/bundle/nsis/*.exe     # NSIS 인스톨러
 
 [Semantic Versioning](https://semver.org/) 사용:
 
-```
+```text
 MAJOR.MINOR.PATCH
 
 예: 0.1.0 → 0.2.0 → 0.2.1 → 1.0.0
@@ -674,7 +674,7 @@ git push -u origin chore/initial-setup
 
 ### 전체 파일 구조 요약
 
-```
+```text
 project-root/
 ├── .github/
 │   └── workflows/
@@ -691,12 +691,12 @@ project-root/
 
 | Action | 용도 | 문서 |
 |--------|------|------|
-| `actions/checkout@v4` | 리포지토리 체크아웃 | [Link](https://github.com/actions/checkout) |
-| `actions/setup-node@v4` | Node.js 설치 + npm 캐시 | [Link](https://github.com/actions/setup-node) |
-| `dtolnay/rust-toolchain@stable` | Rust 툴체인 설치 | [Link](https://github.com/dtolnay/rust-toolchain) |
-| `swatinem/rust-cache@v2` | Rust 빌드 캐시 | [Link](https://github.com/Swatinem/rust-cache) |
-| `ilammy/setup-nasm@v1` | NASM 어셈블러 설치 | [Link](https://github.com/ilammy/setup-nasm) |
-| `tauri-apps/tauri-action@v0` | Tauri 빌드 + Release 생성 | [Link](https://github.com/tauri-apps/tauri-action) |
+| `actions/checkout@v4` | 리포지토리 체크아웃 | [actions/checkout 문서](https://github.com/actions/checkout) |
+| `actions/setup-node@v4` | Node.js 설치 + npm 캐시 | [actions/setup-node 문서](https://github.com/actions/setup-node) |
+| `dtolnay/rust-toolchain@stable` | Rust 툴체인 설치 | [dtolnay/rust-toolchain 문서](https://github.com/dtolnay/rust-toolchain) |
+| `swatinem/rust-cache@v2` | Rust 빌드 캐시 | [swatinem/rust-cache 문서](https://github.com/Swatinem/rust-cache) |
+| `ilammy/setup-nasm@v1` | NASM 어셈블러 설치 | [ilammy/setup-nasm 문서](https://github.com/ilammy/setup-nasm) |
+| `tauri-apps/tauri-action@v0` | Tauri 빌드 + Release 생성 | [tauri-apps/tauri-action 문서](https://github.com/tauri-apps/tauri-action) |
 
 ## 부록: Rust 릴리스 프로필 최적화
 
