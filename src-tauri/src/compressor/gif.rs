@@ -117,7 +117,11 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, gif::Repeat, Vec<De
 
     let mut frames: Vec<DecodedFrame> = Vec::new();
     // Canvas tracks the cumulative composited image (disposal-aware).
+    // Initialize with the GIF background color so uncovered areas are correct.
     let mut canvas = vec![0u8; canvas_size];
+    for px in canvas.chunks_exact_mut(4) {
+        px.copy_from_slice(&bg_fill);
+    }
 
     while let Some(frame) = reader
         .read_next_frame()
@@ -189,7 +193,9 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, gif::Repeat, Vec<De
                 if let Some(prev) = pre_composite {
                     canvas.copy_from_slice(&prev);
                 } else {
-                    canvas.fill(0);
+                    for px in canvas.chunks_exact_mut(4) {
+                        px.copy_from_slice(&bg_fill);
+                    }
                 }
             }
             _ => {
