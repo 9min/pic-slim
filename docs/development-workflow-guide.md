@@ -164,7 +164,7 @@ GitHub 리포지토리 → Settings → Branches → Branch protection rules →
 | Require a pull request before merging | **ON** | PR 없이 직접 push 차단 |
 | Require approvals | 프로젝트에 따라 설정 | 1인 개발 시 0, 팀 개발 시 1 이상 |
 | Require status checks to pass | **ON** | CI 통과 필수 |
-| Required status checks | `Lint & Type Check`, `Build (Windows)` | CI 잡 이름과 정확히 일치해야 함 |
+| Required status checks | `Lint & Type Check`, `Rust Check` | CI 잡 이름과 정확히 일치해야 함 |
 | Require branches to be up to date | **ON** | 머지 전 최신 main과 동기화 필수 |
 | Do not allow bypassing the above settings | **ON** | admin도 직접 push 불가 (`enforce_admins: true`) |
 | Restrict who can push to matching branches | **ON** | 직접 push 차단 |
@@ -183,7 +183,7 @@ GitHub 리포지토리 → Settings → Branches → Branch protection rules →
 >   --method PUT \
 >   --field enforce_admins=true \
 >   --field required_pull_request_reviews='{"required_approving_review_count":0}' \
->   --field required_status_checks='{"strict":true,"contexts":["Lint & Type Check","Build (Windows)"]}'
+>   --field required_status_checks='{"strict":true,"contexts":["Lint & Type Check","Rust Check"]}'
 > ```
 
 ---
@@ -300,55 +300,44 @@ jobs:
       - name: TypeScript type check
         run: npx tsc --noEmit
 
-  # Job 2: 실제 빌드 (check 통과 후 실행)
-  build:
-    name: Build (Windows)
+  # Job 2: Rust 타입/문법 검증 (check 통과 후 실행)
+  cargo-check:
+    name: Rust Check
     needs: check          # check job 통과 필수
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: x86_64-pc-windows-msvc
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
           workspaces: src-tauri -> target
 
-      - name: Install NASM
-        uses: ilammy/setup-nasm@v1
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev nasm
 
-      - name: Install frontend dependencies
-        run: npm ci
-
-      - name: Build Tauri app
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tauriScript: npm run tauri
+      - name: Cargo check
+        working-directory: src-tauri
+        run: cargo check
 ```
 
 ### CI 구조 설계 원칙
 
 ```
-check (빠름, ubuntu)  →  build (느림, windows)
-   TypeScript 타입 체크       Rust + 프론트엔드 전체 빌드
-   ~30초                      ~5-10분
+check (빠름, ubuntu)  →  cargo-check (빠름, ubuntu)
+   TypeScript 타입 체크       Rust 타입/문법 검증 (바이너리 생성 X)
+   ~30초                      ~1-2분
 ```
 
-- **check → build 순차 실행** (`needs: check`): 타입 에러가 있으면 비용이 큰 빌드를 건너뜀
-- **check는 ubuntu에서 실행**: 빠르고 저렴함 (프론트엔드 검증만)
-- **build는 windows에서 실행**: 실제 타겟 OS에서 빌드 검증
+- **check → cargo-check 순차 실행** (`needs: check`): 타입 에러가 있으면 Rust 검증을 건너뜀
+- **모든 job이 ubuntu에서 실행**: 빠르고 저렴함
+- **cargo check**: `cargo build`와 달리 바이너리를 생성하지 않아 훨씬 빠름. 타입/문법 에러만 검출
+- **전체 빌드 검증은 release.yml에서만 수행**: 태그 push 시 windows-latest에서 실제 빌드
 - **concurrency**: 같은 브랜치에서 새 push가 오면 이전 CI 자동 취소 (비용 절약)
 
 ### 다른 프로젝트에 적용 시 수정 포인트
@@ -357,9 +346,8 @@ check (빠름, ubuntu)  →  build (느림, windows)
 |------|-------------|-----------|
 | Node.js 버전 | 22 | 프로젝트에 맞게 (18, 20 등) |
 | check 내용 | `tsc --noEmit` | `npm run lint`, `npm test` 추가 가능 |
-| build runner | `windows-latest` | `ubuntu-latest` (웹 앱), `macos-latest` (macOS 앱) |
-| NASM 설치 | 필요 (mozjpeg) | 프로젝트에 따라 제거 |
-| Rust 설치 | 필요 (Tauri) | 웹 프로젝트면 제거 |
+| cargo-check | `cargo check` (Rust 프로젝트) | Rust 없으면 제거 |
+| system dependencies | Tauri 빌드에 필요한 Linux 패키지 | 프로젝트에 따라 조정 |
 | Rust cache | `swatinem/rust-cache@v2` | Rust 없으면 제거 |
 
 ### 웹 프로젝트용 간소화 버전
