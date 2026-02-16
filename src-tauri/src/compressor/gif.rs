@@ -51,6 +51,7 @@ struct DeltaFrame {
 }
 
 pub fn compress(input_path: &Path, output_path: &Path, quality: u32) -> Result<u64, String> {
+    let quality = quality.clamp(60, 95);
     let params = quality_params(quality);
 
     // --- Phase 1: Decode all frames to full-canvas RGBA ---
