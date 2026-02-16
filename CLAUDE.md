@@ -58,7 +58,7 @@ pic-slim/
 │   ├── Cargo.toml                # Rust 의존성
 │   └── tauri.conf.json           # Tauri 설정
 ├── .github/workflows/
-│   ├── ci.yml                    # PR 시 Lint + Type Check + Build
+│   ├── ci.yml                    # PR 시 Lint + Type Check + Cargo Check
 │   └── release.yml               # 태그 푸시 시 빌드 + GitHub Release
 ├── .coderabbit.yaml              # CodeRabbit AI 코드 리뷰 설정
 ├── package.json                  # Node 의존성
