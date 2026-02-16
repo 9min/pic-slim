@@ -95,6 +95,11 @@ src-tauri/src/        # Rust 백엔드
   ├── commands.rs     # Tauri 커맨드
   ├── compressor/     # JPEG/PNG/GIF 압축 엔진
   └── thumbnail.rs    # 썸네일/프리뷰 생성
+
+docs/                 # 프로젝트 문서
+  ├── PRD.md          # 제품 요구사항 문서
+  ├── ARCHITECTURE.md # 아키텍처 설계 문서
+  └── development-workflow-guide.md  # 개발 워크플로우 가이드
 ```
 
 ## 라이선스
