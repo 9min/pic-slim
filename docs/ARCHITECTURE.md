@@ -311,10 +311,9 @@ PR to main
     └── npx tsc --noEmit
     │
     ▼
-[Job: Build (Windows)] (windows-latest)
-    ├── Node.js 22 + Rust stable + NASM 설치
-    ├── npm ci
-    └── tauri-action (빌드 검증)
+[Job: Rust Check] (ubuntu-latest)
+    ├── Rust stable + system dependencies 설치
+    └── cargo check (타입/문법 검증, 바이너리 생성 X)
 ```
 
 **release.yml** (태그 푸시 시 실행):
@@ -346,7 +345,7 @@ CodeRabbit 자동 리뷰 (한국어)
 
 | 규칙 | 설정 |
 |------|------|
-| 필수 상태 체크 | CI / Lint & Type Check 통과 |
+| 필수 상태 체크 | Lint & Type Check + Rust Check 통과 |
 | strict 모드 | main 대비 최신 상태여야 머지 가능 |
 | 대화 해결 필수 | CodeRabbit 리뷰 코멘트 모두 resolve |
 | force push 차단 | 활성화 |

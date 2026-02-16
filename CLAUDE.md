@@ -57,6 +57,10 @@ pic-slim/
 │   │       └── gif.rs            # GIF 최적화
 │   ├── Cargo.toml                # Rust 의존성
 │   └── tauri.conf.json           # Tauri 설정
+├── docs/                         # 프로젝트 문서
+│   ├── PRD.md                    # 제품 요구사항 문서
+│   ├── ARCHITECTURE.md           # 아키텍처 설계 문서
+│   └── development-workflow-guide.md  # 개발 워크플로우 가이드
 ├── .github/workflows/
 │   ├── ci.yml                    # PR 시 Lint + Type Check + Cargo Check
 │   └── release.yml               # 태그 푸시 시 빌드 + GitHub Release
