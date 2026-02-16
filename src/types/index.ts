@@ -41,3 +41,8 @@ export interface CompressionEvent {
 }
 
 export type AppState = "empty" | "ready" | "compressing" | "done";
+
+export interface ProgressBarProps {
+  done: number;
+  total: number;
+}
