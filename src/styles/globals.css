@@ -162,6 +162,7 @@ img {
 }
 
 @keyframes progress-indeterminate {
+  /* 30% 너비의 바가 컨테이너 전체를 가로지르려면 약 433% 이동 필요 (100%/0.3 ≈ 333% + 100%) */
   0% { transform: translateX(-100%); }
   100% { transform: translateX(433%); }
 }

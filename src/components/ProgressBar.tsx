@@ -6,6 +6,7 @@ interface ProgressBarProps {
 export default function ProgressBar({ done, total }: ProgressBarProps) {
   const percent = total > 0 ? Math.min(100, Math.max(0, Math.round((done / total) * 100))) : 0;
   const isIndeterminate = total > 0 && done === 0;
+  const isComplete = total > 0 && done === total;
 
   return (
     <div
@@ -16,29 +17,31 @@ export default function ProgressBar({ done, total }: ProgressBarProps) {
         flex: 1,
       }}
     >
-      {/* Spinner */}
-      <svg
-        className="animate-spin"
-        style={{ width: 18, height: 18, color: "#2563EB", flexShrink: 0 }}
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-      >
-        <circle
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="3"
-          opacity="0.2"
-        />
-        <path
-          d="M4 12a8 8 0 018-8"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-      </svg>
+      {/* Spinner - 완료 시 숨김 */}
+      {!isComplete && (
+        <svg
+          className="animate-spin"
+          style={{ width: 18, height: 18, color: "#2563EB", flexShrink: 0 }}
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="3"
+            opacity="0.2"
+          />
+          <path
+            d="M4 12a8 8 0 018-8"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+        </svg>
+      )}
 
       <div
         style={{
@@ -50,7 +53,7 @@ export default function ProgressBar({ done, total }: ProgressBarProps) {
         }}
       >
         <div
-          className={isIndeterminate ? "progress-bar-indeterminate" : "progress-bar-active"}
+          className={isIndeterminate ? "progress-bar-indeterminate" : (isComplete ? "" : "progress-bar-active")}
           style={{
             height: "100%",
             borderRadius: 999,
