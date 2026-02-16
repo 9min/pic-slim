@@ -14,6 +14,7 @@ struct QualityParams {
 }
 
 fn quality_params(quality: u32) -> QualityParams {
+    let quality = quality.clamp(60, 95);
     match quality {
         90..=u32::MAX => QualityParams {
             dithering: 0.65,
@@ -53,7 +54,7 @@ pub fn compress(input_path: &Path, output_path: &Path, quality: u32) -> Result<u
     let params = quality_params(quality);
 
     // --- Phase 1: Decode all frames to full-canvas RGBA ---
-    let (canvas_w, canvas_h, decoded_frames) = decode_all_frames(input_path)?;
+    let (canvas_w, canvas_h, repeat, decoded_frames) = decode_all_frames(input_path)?;
 
     let is_single_frame = decoded_frames.len() <= 1;
     let estimated_memory = canvas_w as usize * canvas_h as usize * 4 * decoded_frames.len();
@@ -70,7 +71,7 @@ pub fn compress(input_path: &Path, output_path: &Path, quality: u32) -> Result<u
     };
 
     // --- Phase 4: Write all frames sequentially ---
-    write_gif(output_path, canvas_w, canvas_h, &encoded_frames)?;
+    write_gif(output_path, canvas_w, canvas_h, repeat, &encoded_frames)?;
 
     let compressed_size = std::fs::metadata(output_path)
         .map(|m| m.len())
@@ -83,7 +84,7 @@ pub fn compress(input_path: &Path, output_path: &Path, quality: u32) -> Result<u
 // Phase 1: Full-canvas decoding
 // ---------------------------------------------------------------------------
 
-fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, Vec<DecodedFrame>), String> {
+fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, gif::Repeat, Vec<DecodedFrame>), String> {
     let file =
         std::fs::File::open(input_path).map_err(|e| format!("GIF 열기 실패: {}", e))?;
     let mut opts = gif::DecodeOptions::new();
@@ -94,6 +95,7 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, Vec<DecodedFrame>),
 
     let w = reader.width();
     let h = reader.height();
+    let repeat = reader.repeat();
     let canvas_size = w as usize * h as usize * 4;
 
     // Derive background fill color from global palette + bg_color index
@@ -195,7 +197,7 @@ fn decode_all_frames(input_path: &Path) -> Result<(u16, u16, Vec<DecodedFrame>),
         }
     }
 
-    Ok((w, h, frames))
+    Ok((w, h, repeat, frames))
 }
 
 // ---------------------------------------------------------------------------
@@ -462,6 +464,7 @@ fn write_gif(
     output_path: &Path,
     width: u16,
     height: u16,
+    repeat: gif::Repeat,
     frames: &[gif::Frame<'static>],
 ) -> Result<(), String> {
     let mut output = std::fs::File::create(output_path)
@@ -471,7 +474,7 @@ fn write_gif(
         .map_err(|e| format!("GIF 인코더 생성 실패: {}", e))?;
 
     encoder
-        .set_repeat(gif::Repeat::Infinite)
+        .set_repeat(repeat)
         .map_err(|e| format!("GIF 반복 설정 실패: {}", e))?;
 
     for frame in frames {
