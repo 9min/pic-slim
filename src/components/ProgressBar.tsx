@@ -1,7 +1,4 @@
-interface ProgressBarProps {
-  done: number;
-  total: number;
-}
+import type { ProgressBarProps } from "../types";
 
 export default function ProgressBar({ done, total }: ProgressBarProps) {
   const percent = total > 0 ? Math.min(100, Math.max(0, Math.round((done / total) * 100))) : 0;
@@ -20,7 +17,7 @@ export default function ProgressBar({ done, total }: ProgressBarProps) {
       {/* Spinner - 완료 시 숨김 */}
       {!isComplete && (
         <svg
-          className="animate-spin"
+          className="animate-spin motion-reduce:animate-none"
           style={{ width: 18, height: 18, color: "#2563EB", flexShrink: 0 }}
           viewBox="0 0 24 24"
           fill="none"
