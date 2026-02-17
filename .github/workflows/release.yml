@@ -43,7 +43,7 @@ jobs:
           tauriScript: npm run tauri
           tagName: ${{ github.ref_name }}
           releaseName: "PicSlim ${{ github.ref_name }}"
-          releaseDraft: true
+          releaseDraft: false
           includeRelease: true
 
       - name: Upload portable exe
